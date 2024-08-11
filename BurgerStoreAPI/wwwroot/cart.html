@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart</title>
+ 
+    <link rel="stylesheet" type="text/css" href="CSS/cart.css" />
+</head>
+<body>
+    <h1>Cart</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Unique ID</th>
+                <th>Burger Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="cartTableBody"></tbody>
+    </table>
+    <div class="total" id="totalSection">
+        <p>Total Quantity: <span id="totalQuantity">0</span></p>
+        <p>Total Price: Rs <span id="totalPrice">0</span></p>
+    </div>
+    <div class="place-order">
+        <button onclick="placeOrder()">Place Order</button>
+    </div>
+
+   
+    <script src="SCRIPT/cart.js"></script>
+</body>
+</html>

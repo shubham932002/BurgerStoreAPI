@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Page</title>
+    <link rel="stylesheet" type="text/css" href="CSS/menupage.css" />
+</head>
+<body>
+    <h1>Menu</h1>
+    <div class="burger">
+        <h2><img src="IMG/burger1.png" alt="Crispy Burger Icon"> Crispy Supreme</h2>
+        <label for="category1">Category:</label>
+        <select id="category1">
+            <option value="veg">Veg - Rs 100</option>
+            <option value="egg">Egg - Rs 150</option>
+            <option value="chicken">Chicken - Rs 200</option>
+        </select>
+        <label for="quantity1">Quantity:</label>
+        <input type="number" id="quantity1" min="1" value="1">
+        <button class="btn" onclick="addToCart('Crispy Supreme', 'category1', 'quantity1')">Add to Cart</button>
+    </div>
+    <div class="burger">
+        <h2><img src="IMG/burger2.png" alt="Surprise Burger Icon"> Surprise</h2>
+        <label for="category2">Category:</label>
+        <select id="category2">
+            <option value="veg">Veg - Rs 100</option>
+            <option value="egg">Egg - Rs 150</option>
+            <option value="chicken">Chicken - Rs 200</option>
+        </select>
+        <label for="quantity2">Quantity:</label>
+        <input type="number" id="quantity2" min="1" value="1">
+        <button class="btn" onclick="addToCart('Surprise', 'category2', 'quantity2')">Add to Cart</button>
+    </div>
+    <div class="burger">
+        <h2><img src="IMG/burger3.png" alt="Whopper Burger Icon"> Whopper</h2>
+        <label for="category3">Category:</label>
+        <select id="category3">
+            <option value="veg">Veg - Rs 100</option>
+            <option value="egg">Egg - Rs 150</option>
+            <option value="chicken">Chicken - Rs 200</option>
+        </select>
+        <label for="quantity3">Quantity:</label>
+        <input type="number" id="quantity3" min="1" value="1">
+        <button class="btn" onclick="addToCart('Whopper', 'category3', 'quantity3')">Add to Cart</button>
+    </div>
+    <div class="burger">
+        <h2><img src="IMG/burger4.png" alt="Chilli Cheese Burger Icon"> Chilli Cheese</h2>
+        <label for="category4">Category:</label>
+        <select id="category4">
+            <option value="veg">Veg - Rs 100</option>
+            <option value="egg">Egg - Rs 150</option>
+            <option value="chicken">Chicken - Rs 200</option>
+        </select>
+        <label for="quantity4">Quantity:</label>
+        <input type="number" id="quantity4" min="1" value="1">
+        <button class="btn" onclick="addToCart('Chilli Cheese', 'category4', 'quantity4')">Add to Cart</button>
+    </div>
+    <div class="burger">
+        <h2><img src="IMG/burger5.png" alt="Tandoor Gill Burger Icon"> Tandoor Gill</h2>
+        <label for="category5">Category:</label>
+        <select id="category5">
+            <option value="veg">Veg - Rs 100</option>
+            <option value="egg">Egg - Rs 150</option>
+            <option value="chicken">Chicken - Rs 200</option>
+        </select>
+        <label for="quantity5">Quantity:</label>
+        <input type="number" id="quantity5" min="1" value="1">
+        <button class="btn" onclick="addToCart('Tandoor Gill', 'category5', 'quantity5')">Add to Cart</button>
+    </div>
+
+    <button class="btn btn-secondary" onclick="viewCart()">View Cart</button>
+
+    
+    <script src="SCRIPT/menupage.js"></script>
+</body>
+</html>

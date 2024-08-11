@@ -1,0 +1,126 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins:400,500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.bg-img {
+    background: url('../MainBurgerImage.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+    .bg-img:after {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,0.7);
+    }
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    text-align: center;
+    padding: 20px;
+    width: 90%;
+    max-width: 360px;
+    transform: translate(-50%,-50%);
+    background: rgba(255,255,255,0.04);
+    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+}
+
+    .content header {
+        color: white;
+        font-size: 33px;
+        font-weight: 600;
+        margin: 0 0 35px 0;
+        font-family: 'Montserrat',sans-serif;
+    }
+
+.form-header {
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.field {
+    position: relative;
+    height: 40px;
+    width: 100%;
+    display: flex;
+    background: rgba(255,255,255,0.94);
+    margin-bottom: 20px;
+}
+
+    .field span {
+        color: #222;
+        width: 30px;
+        line-height: 45px;
+    }
+
+    .field input {
+        height: 100%;
+        width: calc(100% - 30px);
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #222;
+        font-size: 14px;
+        font-family: 'Poppins',sans-serif;
+    }
+
+        .field input[type="submit"] {
+            background: #28a745;
+            border: 1px solid #218838;
+            color: white;
+            font-size: 16px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat',sans-serif;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+            .field input[type="submit"]:hover {
+                background: #218838;
+            }
+
+
+
+.login-options {
+    color: white;
+    margin: 15px 0;
+    font-family: 'Poppins',sans-serif;
+}
+
+
+
+
+
+.signup {
+    font-size: 15px;
+    color: white;
+    font-family: 'Poppins',sans-serif;
+    margin-top: 30px;
+}
+
+    .signup a {
+        color: #3498db;
+        text-decoration: none;
+    }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
