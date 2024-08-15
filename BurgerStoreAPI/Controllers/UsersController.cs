@@ -7,39 +7,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BurgerStoreAPI.Data;
 using BurgerStoreAPI.Models;
+using BurgerStoreAPI.BusinessLayer;
 
 namespace BurgerStoreAPI.Controllers
 {
+  
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly BurgerStoreContext _context;
+        private readonly IUserService _userService;
 
-        public UsersController(BurgerStoreContext context)
+        public UsersController(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-
+            var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
-
-            return user;
+            return Ok(user);
         }
 
         // PUT: api/Users/5
@@ -51,22 +53,10 @@ namespace BurgerStoreAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
+            var result = await _userService.UpdateUserAsync(user);
+            if (!result)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -76,46 +66,32 @@ namespace BurgerStoreAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> PostUser(User user)
         {
-            // Validate user details
             if (string.IsNullOrWhiteSpace(user.Name) || !IsValidPhoneNumber(user.MobileNumber))
             {
                 return BadRequest("Invalid user data.");
             }
 
-            // Check if user already exists
-            var existingUser = await _context.Users
-                .FirstOrDefaultAsync(u => u.MobileNumber == user.MobileNumber);
-
-            if (existingUser != null)
+            var existingUser = await _userService.GetAllUsersAsync();
+            if (existingUser.Any(u => u.MobileNumber == user.MobileNumber))
             {
                 return Conflict("User with this mobile number already exists.");
             }
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user.UserId);
+            var userId = await _userService.CreateUserAsync(user);
+            return CreatedAtAction(nameof(GetUser), new { id = userId }, userId);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var result = await _userService.DeleteUserAsync(id);
+            if (!result)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
             return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.UserId == id);
         }
 
         private bool IsValidPhoneNumber(string phoneNumber)

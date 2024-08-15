@@ -4,6 +4,7 @@ using BurgerStoreAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerStoreAPI.Migrations
 {
     [DbContext(typeof(BurgerStoreContext))]
-    partial class BurgerStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240812051147_added menu table")]
+    partial class addedmenutable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,48 +48,6 @@ namespace BurgerStoreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageUrl = "/IMG/burger1.png",
-                            Name = "Crispy Supreme",
-                            Price = 100m,
-                            Type = "veg"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageUrl = "/IMG/burger2.png",
-                            Name = "Surprise",
-                            Price = 100m,
-                            Type = "veg"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ImageUrl = "/IMG/burger3.png",
-                            Name = "Whopper",
-                            Price = 100m,
-                            Type = "veg"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ImageUrl = "/IMG/burger4.png",
-                            Name = "Chilli Cheese",
-                            Price = 100m,
-                            Type = "veg"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ImageUrl = "/IMG/burger5.png",
-                            Name = "Tandoor Gill",
-                            Price = 100m,
-                            Type = "veg"
-                        });
                 });
 
             modelBuilder.Entity("BurgerStoreAPI.Models.Order", b =>

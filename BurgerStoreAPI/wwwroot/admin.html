@@ -1,0 +1,79 @@
+﻿<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" href="CSS/admin.css" />
+</head>
+<body>
+    <h1>Admin Panel</h1>
+
+    <form id="burgerForm">
+        <h2>Add / Update Burger</h2>
+
+        <label for="burgerName">Burger Name:</label>
+        <input type="text" id="burgerName" required>
+
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="veg">Veg</option>
+            <option value="egg">Egg</option>
+            <option value="chicken">Chicken</option>
+        </select>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" required>
+
+        <input type="hidden" id="burgerId">-->
+ <!-- Hidden field for updating -->
+<!--<button type="submit">Add Burger</button>
+    </form>
+
+    <h2>Existing Burgers</h2>
+    <div id="burgerList"></div>
+
+    <script src="SCRIPT/admin.js"></script>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" href="CSS/admin.css" />
+</head>
+<body>
+    <h1>Admin Panel</h1>
+
+    <form id="burgerForm">
+        <h2>Add / Update Burger</h2>
+
+        <label for="burgerName">Burger Name:</label>
+        <input type="text" id="burgerName" required>
+
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="veg">Veg</option>
+            <option value="egg">Egg</option>
+            <option value="chicken">Chicken</option>
+        </select>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" required>
+
+        <label for="imageUrl">Image URL:</label>
+        <input type="text" id="imageUrl" placeholder="Enter image URL" required>
+
+        <input type="hidden" id="burgerId"> <!-- Hidden field for updating -->
+        <button type="submit">Add Burger</button>
+    </form>
+
+    <h2>Existing Burgers</h2>
+    <div id="burgerList"></div>
+
+    <script src="SCRIPT/admin.js"></script>
+</body>
+</html>
