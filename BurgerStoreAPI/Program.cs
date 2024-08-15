@@ -28,6 +28,9 @@ namespace BurgerStoreAPI
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IMenuService, MenuService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();  
+            
+            
 
             // Configure CORS policy
             builder.Services.AddCors(options =>

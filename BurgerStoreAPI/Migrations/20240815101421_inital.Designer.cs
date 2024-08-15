@@ -4,6 +4,7 @@ using BurgerStoreAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerStoreAPI.Migrations
 {
     [DbContext(typeof(BurgerStoreContext))]
-    partial class BurgerStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240815101421_inital")]
+    partial class inital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,6 +48,37 @@ namespace BurgerStoreAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
+                });
+
+            modelBuilder.Entity("BurgerStoreAPI.Models.CartItem", b =>
+                {
+                    b.Property<int>("UniqueID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniqueID"));
+
+                    b.Property<string>("BurgerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UniqueID");
+
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("BurgerStoreAPI.Models.Menu", b =>
@@ -142,8 +176,6 @@ namespace BurgerStoreAPI.Migrations
 
                     b.HasKey("UniqueID");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Cart");
                 });
 
@@ -168,15 +200,6 @@ namespace BurgerStoreAPI.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("BurgerStoreAPI.Models.Order", b =>
-                {
-                    b.HasOne("BurgerStoreAPI.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

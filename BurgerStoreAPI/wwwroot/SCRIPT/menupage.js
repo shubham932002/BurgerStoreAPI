@@ -3,6 +3,8 @@
     var quantity = document.getElementById(quantityId).value;
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
     var price = category === 'veg' ? 100 : category === 'egg' ? 150 : 200;
+    
+
 
     cart.push({ name, category, quantity, price });
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -40,7 +42,7 @@ function renderBurgers(products) {
 }
 
 function viewCart() {
-    window.location.href = 'cart.html';
+    window.location.href = 'order.html';
 }
 
 fetchProducts();

@@ -20,7 +20,12 @@ namespace BurgerStoreAPI.BusinessLayer
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            return await _context.Orders.FindAsync(id);
+            return await _context.Orders.FirstOrDefaultAsync(o => o.UniqueID == id);
+        }
+
+        public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _context.Orders.Where(o => o.UserId == userId).ToListAsync();
         }
 
         public async Task<bool> UpdateOrderAsync(Order order)
@@ -32,6 +37,12 @@ namespace BurgerStoreAPI.BusinessLayer
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
+            var userExists = await _context.Users.AnyAsync(u => u.UserId == order.UserId);
+            if (!userExists)
+            {
+                throw new ArgumentException("Invalid UserId.");
+            }
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
@@ -47,6 +58,4 @@ namespace BurgerStoreAPI.BusinessLayer
             return true;
         }
     }
-
-    
 }

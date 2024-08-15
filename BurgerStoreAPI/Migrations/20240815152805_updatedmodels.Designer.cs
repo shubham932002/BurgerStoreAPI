@@ -12,18 +12,43 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BurgerStoreAPI.Migrations
 {
     [DbContext(typeof(BurgerStoreContext))]
-    [Migration("20240812055437_added data in menustable on model creating")]
-    partial class addeddatainmenustableonmodelcreating
+    [Migration("20240815152805_updatedmodels")]
+    partial class updatedmodels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("BurgerStoreAPI.Models.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+                });
 
             modelBuilder.Entity("BurgerStoreAPI.Models.Menu", b =>
                 {
@@ -120,6 +145,8 @@ namespace BurgerStoreAPI.Migrations
 
                     b.HasKey("UniqueID");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Cart");
                 });
 
@@ -144,6 +171,15 @@ namespace BurgerStoreAPI.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("BurgerStoreAPI.Models.Order", b =>
+                {
+                    b.HasOne("BurgerStoreAPI.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

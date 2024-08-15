@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BurgerStoreAPI.Data;
 using BurgerStoreAPI.Models;
 using BurgerStoreAPI.BusinessLayer;
 
 namespace BurgerStoreAPI.Controllers
 {
-   
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
@@ -42,6 +40,8 @@ namespace BurgerStoreAPI.Controllers
             }
             return Ok(order);
         }
+
+  
 
         // PUT: api/Orders/5
         [HttpPut("{id}")]
@@ -74,6 +74,10 @@ namespace BurgerStoreAPI.Controllers
             {
                 var createdOrder = await _orderService.CreateOrderAsync(order);
                 return CreatedAtAction("GetOrder", new { id = createdOrder.UniqueID }, createdOrder);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (DbUpdateException)
             {
