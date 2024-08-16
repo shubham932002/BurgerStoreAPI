@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BurgerStoreAPI.Data;
 using BurgerStoreAPI.Models;
 using BurgerStoreAPI.BusinessLayer;
-
+using Microsoft.AspNetCore.Authorization;
 namespace BurgerStoreAPI.Controllers
 {
   
@@ -24,7 +24,9 @@ namespace BurgerStoreAPI.Controllers
             _userService = userService;
         }
 
-        // GET: api/Users
+        // GET: api/User
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -93,6 +95,8 @@ namespace BurgerStoreAPI.Controllers
 
             return NoContent();
         }
+
+        
 
         private bool IsValidPhoneNumber(string phoneNumber)
         {

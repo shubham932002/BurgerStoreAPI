@@ -1,53 +1,41 @@
 ﻿
-
-const USER_API_URL = 'https://localhost:7070/api/users';
-const ADMIN_API_URL = 'https://localhost:7070/api/admins';  // Assuming a separate endpoint for admin
-
+const API_URLS = {
+    USERS: 'https://localhost:7070/api/users',
+    ADMINS: 'https://localhost:7070/api/admins',
+    AUTH: 'https://localhost:7070/api/auth/login'
+};
 const MOBILE_NUMBER_REGEX = /^\d{10}$/;
 
+// Utility functions
 function showAlert(message) {
     alert(message);
 }
 
-function validateInputs(name, mobileNumber) {
+async function fetchData(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch data from ${url}`);
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    
+        return [];
+    }
+}
+
+function validateInputs(name, mobileNumber, isAdmin = false) {
     if (!name || !mobileNumber) {
         showAlert("Both name and mobile number must be entered.");
         return false;
     }
-    if (!MOBILE_NUMBER_REGEX.test(mobileNumber)) {
+    if (!isAdmin && !MOBILE_NUMBER_REGEX.test(mobileNumber)) {
         showAlert("Mobile number must be 10 digits and in number format.");
         return false;
     }
     return true;
 }
 
-// Fetch users from the API
-async function fetchUsers() {
-    try {
-        const response = await fetch(USER_API_URL);
-        if (!response.ok) throw new Error('Failed to fetch users');
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        showAlert('An error occurred while fetching users.');
-        return [];
-    }
-}
-
-// Fetch admins from the API
-async function fetchAdmins() {
-    try {
-        const response = await fetch(ADMIN_API_URL);
-        if (!response.ok) throw new Error('Failed to fetch admins');
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching admins:', error);
-        showAlert('An error occurred while fetching admins.');
-        return [];
-    }
-}
-
-// Validate user login
+// User-related functions
 async function validateUser(event) {
     event.preventDefault();
 
@@ -56,19 +44,29 @@ async function validateUser(event) {
 
     if (!validateInputs(name, mobileNumber)) return;
 
-    const users = await fetchUsers();
-    const existingUser = users.find(user => user.name === name && user.mobileNumber === mobileNumber);
+    try {
+        const response = await fetch(API_URLS.AUTH, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, mobileNumber })
+        });
 
-    if (existingUser) {
-        localStorage.setItem("userToken", existingUser.userId);
-        showAlert('Welcome ' + name + '!');
-        window.location.href = 'menupage.html';
-    } else {
-        showAlert('Access denied. Invalid user credentials.');
+        if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem("userToken", data.token);
+            showAlert('Welcome ' + name + '!');
+            window.location.href = 'menupage.html';
+        } else {
+            showAlert('Access denied. Invalid user credentials.');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        showAlert('An error occurred while logging in.');
     }
 }
 
-// Signup new user
 async function signupUser(event) {
     event.preventDefault();
 
@@ -77,7 +75,7 @@ async function signupUser(event) {
 
     if (!validateInputs(name, mobileNumber)) return;
 
-    const users = await fetchUsers();
+    const users = await fetchData(API_URLS.USERS);
     const existingUser = users.find(user => user.mobileNumber === mobileNumber);
 
     if (existingUser) {
@@ -86,7 +84,7 @@ async function signupUser(event) {
     }
 
     try {
-        const signupResponse = await fetch(USER_API_URL, {
+        const signupResponse = await fetch(API_URLS.USERS, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -102,20 +100,20 @@ async function signupUser(event) {
         }
     } catch (error) {
         console.error('Error during signup:', error);
-        showAlert('An error occurred while signing up.');
+       
     }
 }
 
-// Validate admin login
+// Admin-related functions
 async function validateAdmin(event) {
     event.preventDefault();
 
     const userName = document.getElementById('adminNameInput').value.trim();
     const password = document.getElementById('adminPasswordInput').value.trim();
 
-    if (!validateInputs(userName, password)) return;
+    if (!validateInputs(userName, password, true)) return;
 
-    const admins = await fetchAdmins();
+    const admins = await fetchData(API_URLS.ADMINS);
     const existingAdmin = admins.find(admin => admin.userName === userName && admin.password === password);
 
     if (existingAdmin) {
@@ -127,17 +125,23 @@ async function validateAdmin(event) {
     }
 }
 
-// Toggle button event listeners
+// Toggle between user and admin forms
 document.getElementById('userToggle').addEventListener('click', () => {
     document.getElementById('userFormContainer').style.display = 'block';
     document.getElementById('adminFormContainer').style.display = 'none';
     document.getElementById('userToggle').classList.add('active');
     document.getElementById('adminToggle').classList.remove('active');
 });
-
 document.getElementById('adminToggle').addEventListener('click', () => {
     document.getElementById('userFormContainer').style.display = 'none';
     document.getElementById('adminFormContainer').style.display = 'block';
     document.getElementById('adminToggle').classList.add('active');
     document.getElementById('userToggle').classList.remove('active');
-});
+})
+
+// Event listeners
+document.getElementById('loginButton').addEventListener('click', validateUser);
+document.getElementById('signupButton').addEventListener('click', signupUser);
+document.getElementById('adminLoginButton').addEventListener('click', validateAdmin);
+
+
