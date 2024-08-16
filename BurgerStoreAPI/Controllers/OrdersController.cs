@@ -63,7 +63,7 @@ namespace BurgerStoreAPI.Controllers
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder([FromBody]Order order)
         {
             if (!ModelState.IsValid)
             {

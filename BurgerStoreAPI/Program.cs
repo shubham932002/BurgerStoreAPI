@@ -1,5 +1,6 @@
 using BurgerStoreAPI.BusinessLayer;
 using BurgerStoreAPI.Data;
+using BurgerStoreAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +29,8 @@ namespace BurgerStoreAPI
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IMenuService, MenuService>();
-            builder.Services.AddScoped<IAdminService, AdminService>();  
+            builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<ICartItemService,CartItemService>();
             
             
 
