@@ -51,6 +51,7 @@ BurgerStoreAPI is a web application designed to manage a burger store's operatio
   - **Data/**: Contains the Entity Framework Core DbContext and migrations.
   - **Models/**: Contains data models representing the entities in the database.
   - **wwwroot/**: Contains static files for the frontend (HTML, CSS, JS, images).
+  - **Options/  and Services/**: Contains JWT Token Logic Files.
 - **BurgerStoreAPI.Test/**: Contains unit tests for the API.
 
 ## API Endpoints
@@ -66,7 +67,10 @@ BurgerStoreAPI is a web application designed to manage a burger store's operatio
 
 - **GET /api/cartitems**: Retrieves all cart items for a user.
 - **POST /api/cartitems**: Adds a new item to the cart.
+- **PUT /api/cartitems/{id}**: Updates an existing cart item.
 - **DELETE /api/cartitems/{id}**: Removes an item from the cart.
+- **DELETE /api/cartitems**: Removes all items from the cart.
+    
 
 ### Menus Controller
 
@@ -99,6 +103,7 @@ The static files for the frontend are located in the `wwwroot/` directory. This 
 - **mainpage.html**: The landing page where users can browse the menu.
 - **menupage.html**: Displays the available burgers.
 - **order.html**: Allows users to place an order.
+- **admin.html**: Allows admin to edit burgers functionality.
 
 ## Testing
 
